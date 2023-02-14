@@ -65,3 +65,19 @@ namespace inject
         return !(lhs == rhs);
     }
 }
+
+namespace std
+{
+    template<>
+    struct hash<inject::type_id>
+    {
+    public:
+        std::size_t operator()(inject::type_id type_id) const noexcept
+        {
+            return _hash(type_id.id);
+        }
+
+    private:
+        hash<std::size_t> _hash;
+    };
+}

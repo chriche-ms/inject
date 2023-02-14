@@ -1,6 +1,6 @@
 project(inject_test)
 
-set(SOURCE src/factory_test.cpp)
+set(SOURCE src/factory_tests.cpp)
 
 add_executable(inject_test ${SOURCE})
 
