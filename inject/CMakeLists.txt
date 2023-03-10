@@ -2,7 +2,8 @@ project(inject)
 
 set(INCLUDE include)
 
-set(HEADER include/inject/factory.h
+set(HEADER include/inject/container.h
+           include/inject/factory.h
            include/inject/factory_exception.h
            include/inject/function_traits.h
            include/inject/type_id.h)
