@@ -14,5 +14,7 @@ set(gtest_force_shared_crt ON CACHE BOOL "GoogleTest: Use DLL-specific run-time"
 
 FetchContent_MakeAvailable(googletest)
 
+enable_testing()
+
 add_subdirectory(inject)
 add_subdirectory(inject_test)
