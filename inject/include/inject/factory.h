@@ -21,7 +21,7 @@ namespace inject
         void register_type(Fn&& fn)
         {
             using type_to = T;
-            using type_from = function_traits<std::remove_reference_t<Fn>>::type_return;
+            using type_from = typename function_traits<std::remove_reference_t<Fn>>::type_return;
 
             static_assert(std::is_convertible_v<type_from, type_to>, "inject::factory::register_type: Template parameter Fn must be a callable type returning a type implicitly convertible to template parameter T");
 
@@ -58,7 +58,7 @@ namespace inject
         template<typename Fn>
         auto resolve(Fn&& fn) const
         {
-            using type_args = function_traits<std::remove_reference_t<Fn>>::type_args;
+            using type_args = typename function_traits<std::remove_reference_t<Fn>>::type_args;
             using type_args_tag = tag<type_args>;
 
             return std::apply(std::forward<Fn>(fn), resolve_args(type_args_tag()));
