@@ -37,7 +37,7 @@ namespace inject
         template<typename T, typename Fn>
         void register_unique(Fn&& fn)
         {
-            return register_cached<std::unique_ptr<T>>(std::forward<Fn>(fn));
+            return register_type<std::unique_ptr<T>>(std::forward<Fn>(fn));
         }
 
         template<typename T>
