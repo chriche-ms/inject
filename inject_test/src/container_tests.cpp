@@ -3,52 +3,6 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
-TEST(container, register_unique_succeeds)
-{
-    // Arrange
-    inject::container container;
-
-    // Action
-    container.register_unique<int>([]() { return std::make_unique<int>(1); });
-
-    // Assert
-    ASSERT_TRUE(container.is_registered<std::unique_ptr<int>>());
-    ASSERT_TRUE(container.is_registered_unique<int>());
-}
-
-TEST(container, register_unique_duplicate)
-{
-    // Arrange
-    inject::container container;
-
-    auto fn = []()
-    {
-        return std::make_unique<int>(1);
-    };
-
-    // Action
-    container.register_unique<int>(fn);
-
-    // Assert
-    ASSERT_THROW(container.register_unique<int>(fn), inject::factory_exception);
-}
-
-TEST(container, register_unique_interface_succeeds)
-{
-    struct itype { virtual ~itype() = default; };
-    struct type : itype {};
-
-    // Arrange
-    inject::container container;
-
-    // Action
-    container.register_unique<itype>([]() { return std::make_unique<type>(); });
-
-    // Assert
-    ASSERT_TRUE(container.is_registered<std::unique_ptr<itype>>());
-    ASSERT_TRUE(container.is_registered_unique<itype>());
-}
-
 TEST(container, register_shared_succeeds)
 {
     // Arrange
@@ -93,6 +47,52 @@ TEST(container, register_shared_interface_succeeds)
     // Assert
     ASSERT_TRUE(container.is_registered<std::shared_ptr<itype>>());
     ASSERT_TRUE(container.is_registered_shared<itype>());
+}
+
+TEST(container, register_unique_succeeds)
+{
+    // Arrange
+    inject::container container;
+
+    // Action
+    container.register_unique<int>([]() { return std::make_unique<int>(1); });
+
+    // Assert
+    ASSERT_TRUE(container.is_registered<std::unique_ptr<int>>());
+    ASSERT_TRUE(container.is_registered_unique<int>());
+}
+
+TEST(container, register_unique_duplicate)
+{
+    // Arrange
+    inject::container container;
+
+    auto fn = []()
+    {
+        return std::make_unique<int>(1);
+    };
+
+    // Action
+    container.register_unique<int>(fn);
+
+    // Assert
+    ASSERT_THROW(container.register_unique<int>(fn), inject::factory_exception);
+}
+
+TEST(container, register_unique_interface_succeeds)
+{
+    struct itype { virtual ~itype() = default; };
+    struct type : itype {};
+
+    // Arrange
+    inject::container container;
+
+    // Action
+    container.register_unique<itype>([]() { return std::make_unique<type>(); });
+
+    // Assert
+    ASSERT_TRUE(container.is_registered<std::unique_ptr<itype>>());
+    ASSERT_TRUE(container.is_registered_unique<itype>());
 }
 
 TEST(container, resolve_cached_succeeds)

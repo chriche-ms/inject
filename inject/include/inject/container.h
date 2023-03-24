@@ -53,6 +53,12 @@ namespace inject
         }
 
         template<typename T>
+        bool is_registered_unique() const
+        {
+            return is_registered<std::unique_ptr<T>>();
+        }
+
+        template<typename T>
         T resolve() const
         {
             return m_factory.resolve<T>();
