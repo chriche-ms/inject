@@ -34,6 +34,12 @@ namespace inject
             return register_cached<std::shared_ptr<T>>(std::forward<Fn>(fn));
         }
 
+        template<typename T, typename Fn>
+        void register_unique(Fn&& fn)
+        {
+            return register_cached<std::unique_ptr<T>>(std::forward<Fn>(fn));
+        }
+
         template<typename T>
         bool is_registered() const
         {
@@ -62,6 +68,12 @@ namespace inject
         std::shared_ptr<T> resolve_shared() const
         {
             return resolve<std::shared_ptr<T>>();
+        }
+
+        template<typename T>
+        std::unique_ptr<T> resolve_unique() const
+        {
+            return resolve<std::unique_ptr<T>>();
         }
 
         factory& get_factory() noexcept
